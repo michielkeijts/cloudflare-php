@@ -73,28 +73,39 @@ class PageRules implements API
         string $direction = null,
         string $match = null
     ): array {
+        $query = [];
+        
         if ($status !== null && !in_array($status, ['active', 'disabled'])) {
             throw new EndpointException('Page Rules can only be listed by status of active or disabled.');
+        } else {
+            $query = [
+                'status' => $status
+            ];
         }
 
         if ($order !== null && !in_array($order, ['status', 'priority'])) {
             throw new EndpointException('Page Rules can only be ordered by status or priority.');
+        } else {
+            $query = [
+                'order' => $order
+            ];
         }
 
         if ($direction !== null && !in_array($direction, ['asc', 'desc'])) {
             throw new EndpointException('Direction of Page Rule ordering can only be asc or desc.');
+        } else {
+            $query = [
+                'direction' => $direction
+            ];
         }
 
         if ($match !== null && !in_array($match, ['all', 'any'])) {
             throw new EndpointException('Match can only be any or all.');
+        } else {
+            $query = [
+                'match' => $match
+            ];
         }
-
-        $query = [
-            'status' => $status,
-            'order' => $order,
-            'direction' => $direction,
-            'match' => $match
-        ];
 
         $user = $this->adapter->get('zones/' . $zoneID . '/pagerules', $query);
         $this->body = json_decode($user->getBody());
