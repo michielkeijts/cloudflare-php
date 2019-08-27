@@ -143,6 +143,26 @@ class Zones implements API
 
         return false;
     }
+    
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     *
+     * @param string $zoneID
+     * @param bool $enable
+     * @return bool
+     */
+    public function changeAlwaysOnlineMode(string $zoneID, bool $enable = false): bool
+    {
+        $response = $this->adapter->patch('zones/' . $zoneID . '/settings/always_online', ['value' => $enable ? 'on' : 'off']);
+
+        $this->body = json_decode($response->getBody());
+
+        if ($this->body->success) {
+            return true;
+        }
+
+        return false;
+    }
 
 
     /**
