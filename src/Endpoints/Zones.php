@@ -163,6 +163,27 @@ class Zones implements API
 
         return false;
     }
+    
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     *
+     * Update BrowserCacheTTL to 
+     * @param string $zoneID
+     * @param int $ttl (seconds)
+     * @return bool
+     */
+    public function changeBrowserCacheTtl(string $zoneID, int $ttl = 0): bool
+    {
+        $response = $this->adapter->patch('zones/' . $zoneID . '/settings/browser_cache_ttl', ['value' => $ttl]);
+
+        $this->body = json_decode($response->getBody());
+
+        if ($this->body->success) {
+            return true;
+        }
+
+        return false;
+    }
 
 
     /**
