@@ -19,7 +19,7 @@ class APIToken implements Auth
     public function getHeaders(): array
     {
         return [
-            'X-Authorization'   => sprintf('Bearer %s', $this->token)
+            'Authorization'   => sprintf('Bearer %s', $this->token)
         ];
     }
 }
